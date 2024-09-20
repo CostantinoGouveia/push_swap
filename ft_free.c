@@ -14,3 +14,18 @@ void	ft_free(t_stack **lst)
 		*lst = tmp;
 	}
 }
+
+void	ft_freestr(char **lst)
+{
+	char	*n1;
+
+	if (!lst)
+		return ;
+	while (*lst)
+	{
+		n1 = *lst;
+		lst++;
+		free(n1);
+	}
+	*lst = NULL;
+}

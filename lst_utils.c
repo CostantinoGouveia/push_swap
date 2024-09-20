@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-t_stack	*ft_lstlast(t_stack *lst)
+t_stack	*ft_stack_lstlast(t_stack *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -9,7 +9,7 @@ t_stack	*ft_lstlast(t_stack *lst)
 	return (lst);
 }
 
-int	ft_lstsize(t_stack *lst)
+int	ft_stack_lstsize(t_stack *lst)
 {
 	size_t	i;
 

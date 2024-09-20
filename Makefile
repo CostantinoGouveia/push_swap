@@ -11,7 +11,10 @@ SRC = push_swap.c \
 	ft_free.c \
 	ft_error_print.c \
 	ft_stack_new.c \
-	ft_chexk_dup.c \
+	ft_check_dup.c \
+	ft_check_sorted.c \
+	lst_utils.c \
+	lst_utils_2.c \
 
 all: $(NAME)
 

@@ -7,5 +7,5 @@ void	ft_add_back(t_stack **stack, t_stack *stack_new)
 	if (!*stack)
 		*stack = stack_new;
 	else
-		(ft_lstlast(*stack))->next = stack_new;
+		(ft_stack_lstlast(*stack))->next = stack_new;
 }

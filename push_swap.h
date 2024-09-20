@@ -28,7 +28,10 @@ int			digit(int c);
 int			space(int c);
 void		ft_error(void);
 void		ft_free(t_stack **lst);
-t_stack		*ft_lstlast(t_stack *lst);
+t_stack		*ft_stack_lstlast(t_stack *lst);
+int			ft_stack_lstsize(t_stack *lst);
+int			ft_min(t_stack *a);
+int			ft_max(t_stack *a);
 /*
 void		ft_ra(t_stack **a, int j);
 void		ft_rb(t_stack **b, int j);
@@ -42,9 +45,7 @@ void		ft_ss(t_stack **a, t_stack **b, int j);
 void		ft_rr(t_stack **a, t_stack **b, int j);
 void		ft_rrr_sub(t_stack **b, int j);
 void		ft_rrr(t_stack **a, t_stack **b, int j);
-int			ft_lstsize(t_stack *lst);
-int			ft_min(t_stack *a);
-int			ft_max(t_stack *a);
+
 int			ft_find_index(t_stack *a, int nbr);
 int			ft_find_place_b(t_stack *stack_b, int nbr_push);
 int			ft_find_place_a(t_stack *a, int nbr);
