@@ -10,8 +10,8 @@ int	main(int argc, char **argv)
 		ft_free(&a);
 		ft_error();
 	}
-	/*if (!ft_checksorted(a))
-		ft_sort(&a);*/
+	if (ft_checksorted(a))
+		ft_error();
 	ft_free(&a);
 	return (0);
 }
