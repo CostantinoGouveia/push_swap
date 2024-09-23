@@ -15,6 +15,8 @@ SRC = push_swap.c \
 	ft_check_sorted.c \
 	lst_utils.c \
 	lst_utils_2.c \
+	operations.c \
+	operations_2.c \
 
 all: $(NAME)
 

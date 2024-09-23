@@ -14,7 +14,7 @@ typedef struct s_stack
 	long			index;
 	struct s_stack	*next;
 }	t_stack;
-
+void		print_stack(t_stack *a);
 void		list_args(char **argv, t_stack **stack_a);
 void		ft_add_back(t_stack **stack, t_stack *stack_new);
 t_stack		*ft_stack_new(int content);
@@ -32,24 +32,27 @@ t_stack		*ft_stack_lstlast(t_stack *lst);
 int			ft_stack_lstsize(t_stack *lst);
 int			ft_min(t_stack *a);
 int			ft_max(t_stack *a);
-/*
+void		fill_index(t_stack **a);
 void		ft_ra(t_stack **a, int j);
 void		ft_rb(t_stack **b, int j);
 void		ft_sa(t_stack **a, int j);
 void		ft_sb(t_stack **b, int j);
 void		ft_pa(t_stack **a, t_stack **b, int j);
-void		ft_pb(t_stack **stack_a, t_stack **stack_b, int j);
+void		ft_pb(t_stack **a, t_stack **b, int j);
 void		ft_rra(t_stack **a, int j);
 void		ft_rrb(t_stack **b, int j);
 void		ft_ss(t_stack **a, t_stack **b, int j);
 void		ft_rr(t_stack **a, t_stack **b, int j);
 void		ft_rrr_sub(t_stack **b, int j);
 void		ft_rrr(t_stack **a, t_stack **b, int j);
+int 		ft_atoi_limit(const char *str);
 
 int			ft_find_index(t_stack *a, int nbr);
+/*
 int			ft_find_place_b(t_stack *stack_b, int nbr_push);
 int			ft_find_place_a(t_stack *a, int nbr);
 */
+//void		quicksort(int *v, int inicio, int fim);
 int			ft_checksorted(t_stack *stack_a);
 void		ft_freestr(char **lst);
 t_stack		*ft_process(int argc, char **argv);

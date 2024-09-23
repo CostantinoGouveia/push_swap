@@ -7,12 +7,12 @@ void	ft_rr(t_stack **a, t_stack **b, int j)
 	if (!*a || !((*a)->next) || !*b || !((*b)->next))
 		return ;
 	tmp = *a;
-	*a = ft_lstlast(*a);
+	*a = ft_stack_lstlast(*a);
 	(*a)->next = tmp;
 	*a = tmp->next;
 	tmp->next = NULL;
 	tmp = *b;
-	*b = ft_lstlast(*b);
+	*b = ft_stack_lstlast(*b);
 	(*b)->next = tmp;
 	*b = tmp->next;
 	tmp->next = NULL;

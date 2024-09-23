@@ -1,22 +1,8 @@
 #include "push_swap.h"
 
-int	ft_find_index(t_stack *a, int nbr)
-{
-	int		i;
-
-	i = 0;
-	while (a->nbr != nbr)
-	{
-		i++;
-		a = a->next;
-	}
-	a->index = 0;
-	return (i);
-}
-
-// This function finds the correct place of the number in stack_b.
-// In other words, it check what index number nbr_push will get 
-// after it is being pushed to the stack_b.
+// This function finds theect plct place of the number in stackstack_b.
+// In other words, it check what index numberwill get will get 
+// after it is being pushed to the stack stack_b.
 int	ft_find_place_b(t_stack *stack_b, int nbr_push)
 {
 	int		i;
