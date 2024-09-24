@@ -14,6 +14,7 @@ typedef struct s_stack
 	long			index;
 	struct s_stack	*next;
 }	t_stack;
+
 void		print_stack(t_stack *a);
 void		list_args(char **argv, t_stack **stack_a);
 void		ft_add_back(t_stack **stack, t_stack *stack_new);

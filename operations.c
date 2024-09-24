@@ -3,13 +3,14 @@
 void	ft_ra(t_stack **a, int j)
 {
 	t_stack	*tmp;
+	t_stack	*last;
 
-	if (!*a || !(*a)->next)
+	if (!*a || !((*a)->next))
 		return ;
 	tmp = *a;
-	*a = ft_stack_lstlast(*a);
-	(*a)->next = tmp;
-	*a = tmp->next;
+	last = ft_stack_lstlast(tmp);
+	*a = (*a)->next;
+	last->next = tmp;
 	tmp->next = NULL;
 	if (j == 0)
 		write(1, "ra\n", 3);
@@ -45,25 +46,21 @@ void	ft_pa(t_stack **a, t_stack **b, int j)
 
 void	ft_rra(t_stack **a, int j)
 {
-	t_stack	*tmp;
-	int		i;
+	t_stack	*prev;
+	t_stack	*last;
 
-	if (!*a || !(*a)->next)
+	if (!*a || !((*a)->next))
 		return ;
-	i = 0;
-	tmp = *a;
-	while ((*a)->next)
+	last = *a;
+	while (last->next)
 	{
-		*a = (*a)->next;
-		i++;
+		prev = last;
+		last = last->next;
 	}
-	(*a)->next = tmp;
-	while (i > 1)
-	{
-		tmp = tmp->next;
-		i--;
-	}
-	tmp->next = NULL;
+	prev->next = NULL;
+	last->next = *a;
+	*a = last;
+
 	if (j == 0)
 		write(1, "rra\n", 4);
 }
@@ -74,14 +71,19 @@ void	ft_ss(t_stack **a, t_stack **b, int j)
 
 	if (!*a || !((*a)->next) || !*b || !((*b)->next))
 		return ;
+
+	// Troca em a
 	tmp = *a;
 	*a = (*a)->next;
 	tmp->next = (*a)->next;
 	(*a)->next = tmp;
+
+	// Troca em b
 	tmp = *b;
 	*b = (*b)->next;
 	tmp->next = (*b)->next;
 	(*b)->next = tmp;
+
 	if (j == 0)
 		write(1, "ss\n", 3);
 }

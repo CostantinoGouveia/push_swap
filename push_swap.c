@@ -2,7 +2,7 @@
 void fill_index(t_stack **a)
 {
 	t_stack	*tmp;
-	int		i;
+	long		i;
 
 	i = 0;
 	tmp = *a;
@@ -18,30 +18,28 @@ int	ft_find_index(t_stack *a, int nbr)
 {
 	int		i;
 
-	i = 0;
 	while (a->nbr != nbr)
 	{
-		i++;
+		i = a->index;
 		a = a->next;
 	}
-	a->index = 0;
 	return (i);
 }
 
-void aproximacao (t_stack *a)
+void aproximacao (t_stack **a)
 {
 	int index_min;
 
-	index_min = ft_find_index(a, ft_min(a));
-	if (index_min < ft_stack_lstsize(a) / 2)
+	index_min = ft_find_index(*a, ft_min(*a));
+	if (index_min < ft_stack_lstsize(*a) / 2)
 	{
-		while (a->nbr != ft_min(a))
-			ft_ra(&a, 0);
+		while ((*a)->nbr != ft_min(*a))
+			ft_ra(a, 0);
 	}
 	else
 	{
-		while (a->nbr != ft_min(a))
-			ft_rra(&a, 0);
+		while ((*a)->nbr != ft_min(*a))
+			ft_rra(a, 0);
 	}
 }
 
@@ -69,22 +67,35 @@ void sort_true (t_stack **a)
 
 void algor (t_stack **a, t_stack **b)
 {
+	printf("antes aproximacao A:\n");
+	print_stack(*a);
+	printf("antes aproximacao B:\n");
+	print_stack(*b);
 	while (!ft_checksorted(*a) && ft_stack_lstsize(*a) > 3)
 	{
-		aproximacao(*a);
-		ft_pb(a, b, 0);
+		aproximacao(a);
+		//ft_pb(a, b, 0);
+		//fill_index(a);
+		break ;
 	}
+	printf("Apos aproximacao A:\n");
+	print_stack(*a);
+	printf("Apos aproximacao B:\n");
+	print_stack(*b);
 	if (!ft_checksorted(*a) && ft_stack_lstsize(*a) == 3)
 		sort_true(a);
 }
 
-void print_stack(t_stack *a)
-{
-	while (a)
-	{
-		printf("# %ld\n", a->nbr);
-		a = a->next;
-	}
+void print_stack(t_stack *stack) {
+    if (!stack) {
+        printf("Stack is empty\n");
+        return;
+    }
+    while (stack) {
+        printf("%ld ", stack->nbr);
+        stack = stack->next;
+    }
+    printf("\n");
 }
 
 int	main(int argc, char **argv)
@@ -99,16 +110,13 @@ int	main(int argc, char **argv)
 		ft_free(&a);
 		ft_error();
 	}
-	//print_stack(a);
 	if (!ft_checksorted(a))
 	{
 		fill_index(&a);
 		algor(&a, &b);
 	}
-	printf("Stack: A\n");
+	printf("Apos algor:\n");
 	print_stack(a);
-	printf("Stack: B\n");
-	print_stack(b);
 	ft_free(&a);
 	return (0);
 }
