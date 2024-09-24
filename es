@@ -1,5 +1,7 @@
 #include "push_swap.h"
 
+
+
 // Função para rotacionar pilha a
 void	ft_ra(t_stack **a, int j)
 {
