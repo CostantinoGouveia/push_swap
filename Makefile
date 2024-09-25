@@ -17,6 +17,7 @@ SRC = push_swap.c \
 	lst_utils_2.c \
 	operations.c \
 	operations_2.c \
+	algo_quick.c \
 
 all: $(NAME)
 

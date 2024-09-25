@@ -67,23 +67,29 @@ void sort_true (t_stack **a)
 
 void algor (t_stack **a, t_stack **b)
 {
-	printf("antes aproximacao A:\n");
+	/*printf("antes aproximacao A:\n");
 	print_stack(*a);
 	printf("antes aproximacao B:\n");
-	print_stack(*b);
-	while (!ft_checksorted(*a) && ft_stack_lstsize(*a) > 3)
+	print_stack(*b);*/
+	while (ft_stack_lstsize(*a) > 3)
 	{
-		aproximacao(a);
-		//ft_pb(a, b, 0);
-		//fill_index(a);
-		break ;
+		if (!ft_checksorted(*a))
+		{
+			aproximacao(a);
+			ft_pb(a, b, 0);
+		}
+		fill_index(a);
 	}
-	printf("Apos aproximacao A:\n");
+	/*printf("Apos aproximacao A:\n");
 	print_stack(*a);
 	printf("Apos aproximacao B:\n");
-	print_stack(*b);
+	print_stack(*b);*/
 	if (!ft_checksorted(*a) && ft_stack_lstsize(*a) == 3)
 		sort_true(a);
+	while (*b)
+	{
+		ft_pa(a, b, 0);
+	}
 }
 
 void print_stack(t_stack *stack) {
@@ -97,6 +103,59 @@ void print_stack(t_stack *stack) {
     }
     printf("\n");
 }
+
+void algor1_aux(t_stack **a, t_stack **b)
+{
+	int	index_min;
+
+	(void) b;
+	fill_index(a);
+	index_min = ft_find_index(*a, ft_min(*a));
+
+	if((ft_min(*a) <= (*a)->key_nbr))
+	{
+		if ((index_min < ft_stack_lstsize(*a) / 2))
+		{
+			while ((*a)->nbr != ft_min(*a))
+				ft_ra(a, 0);
+		}
+		else
+		{
+			while ((*a)->nbr != ft_min(*a))
+				ft_rra(a, 0);
+		}
+	}
+}
+
+void	algor1(t_stack **a, t_stack **b)
+{
+	long	*vet;
+	long		div;
+	long		tm;
+
+	div = 1;
+	vet = fill_vet_pilha(*a, &tm);
+	while (!ft_checksorted(*a) && ft_stack_lstsize(*a) > 10)
+	{
+		(*a)->key_nbr = vet[((div * tm) / 4) - 1];
+		//printf("div: %ld e tm : %ld key: %ld\n", div, tm, (*a)->key_nbr);
+		while ((*a)->key_nbr > ft_min(*a) && ft_stack_lstsize(*a) > 10)
+		{
+			algor1_aux(a, b);
+			ft_pb(a, b, 0);
+		}
+		/*printf("Apos algor A: v\n");
+		print_stack(*a);
+		printf("Apos algor B: v\n");
+		print_stack(*b);*/
+		div++;
+	}
+	if (ft_stack_lstsize(*a) <= 10 && !ft_checksorted(*a))
+	{
+		fill_index(a);
+		algor(a, b);
+	}	
+} 
 
 int	main(int argc, char **argv)
 {
@@ -113,10 +172,17 @@ int	main(int argc, char **argv)
 	if (!ft_checksorted(a))
 	{
 		fill_index(&a);
-		algor(&a, &b);
+		if (ft_stack_lstsize(a)  <= 10)
+		{
+			algor(&a, &b);
+		}
+		else if ((ft_stack_lstsize(a) > 10) && (ft_stack_lstsize(a) <= 100))
+			algor1(&a, &b);
 	}
-	printf("Apos algor:\n");
+	/*printf("Apos algor A:\n");
 	print_stack(a);
+	printf("Apos algor B:\n");
+	print_stack(b);*/
 	ft_free(&a);
 	return (0);
 }

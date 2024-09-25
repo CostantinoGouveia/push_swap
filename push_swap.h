@@ -12,9 +12,12 @@ typedef struct s_stack
 {
 	long			nbr;
 	long			index;
+	long			key_nbr;
+	long			tm_aux;
 	struct s_stack	*next;
 }	t_stack;
 
+long		*fill_vet_pilha(t_stack *a, long *tm);
 void		print_stack(t_stack *a);
 void		list_args(char **argv, t_stack **stack_a);
 void		ft_add_back(t_stack **stack, t_stack *stack_new);

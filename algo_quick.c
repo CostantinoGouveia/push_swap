@@ -1,24 +1,27 @@
 
-#include <stdio.h>
+#include "push_swap.h"
 
-int particiona(int *v, int inicio, int fim)
+long particiona(long *v, long inicio, long fim)
 {
-    int pivo = (v[inicio] + v[fim] + v[(inicio + fim)/2])/3;
+    long    pivo;
+    long    temp;
+
+    pivo = (v[inicio] + v[fim] + v[(inicio + fim)/2])/3;
     while (inicio < fim)
     {
         while (inicio < fim && v[inicio] <= pivo)
             inicio++;
         while (inicio < fim && v[fim] > pivo)
             fim--;
-        int temp = v[inicio];
+        temp = v[inicio];
         v[inicio] = v[fim];
         v[fim] = temp;
     }
-    return inicio;
+    return (inicio);
 }
-void quicksort(int *v, int inicio, int fim)
+void quicksort(long *v, long inicio, long fim)
 {
-    int pos;
+    long pos;
 
     if (inicio < fim)
     {
@@ -28,14 +31,20 @@ void quicksort(int *v, int inicio, int fim)
     }
 }
 
-int main ()
+long    *fill_vet_pilha(t_stack *a, long *tm)
 {
-    int vet[] = {45, 32, 128, 89, 12, 34, 56, 78, 90, 23};
-    for (int i = 0; i < 10; i++)
-        printf("%d ", vet[i]);
-    quicksort(vet, 0, 9);
-    printf("\n %d ", vet[i]);
-    for (int i = 0; i < 10; i++)
-        printf(" %d ", vet[i]);
-    return 0;
+    long    *vet;
+    int     i;
+
+    i = 0;
+    vet = malloc(sizeof(long) * ft_stack_lstsize(a));
+    while (a)
+    {
+        vet[i] = a->nbr;
+        a = a->next;
+        i++;
+    }
+    *tm = i;
+    quicksort(vet, 0, i - 1);
+    return (vet);
 }
