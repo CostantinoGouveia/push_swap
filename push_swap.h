@@ -50,18 +50,10 @@ void		ft_rr(t_stack **a, t_stack **b, int j);
 void		ft_rrr_sub(t_stack **b, int j);
 void		ft_rrr(t_stack **a, t_stack **b, int j);
 int 		ft_atoi_limit(const char *str);
-
 int			ft_find_index(t_stack *a, int nbr);
-/*
-int			ft_find_place_b(t_stack *stack_b, int nbr_push);
-int			ft_find_place_a(t_stack *a, int nbr);
-*/
-//void		quicksort(int *v, int inicio, int fim);
 int			ft_checksorted(t_stack *stack_a);
 void		ft_freestr(char **lst);
 t_stack		*ft_process(int argc, char **argv);
-void		algorithm(int argc, char **argv);
 t_stack		*ft_sub_process(char **argv);
-void		ft_error_ch(void);
 
 #endif

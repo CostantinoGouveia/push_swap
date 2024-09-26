@@ -58,17 +58,18 @@ t_stack	*ft_process(int argc, char **argv)
 
 	i = 1;
 	a = NULL;
-	if (argc < 2)
-		ft_error();
-	if (argc == 2)
-		a = ft_sub_process(argv);
-	else
+	if (argc > 1)
 	{
-		while (i < argc)
+		if (argc == 2)
+			a = ft_sub_process(argv);
+		else
 		{
-			j = ft_atoi_limit(argv[i]);
-			ft_add_back(&a, ft_stack_new(j));
-			i++;
+			while (i < argc)
+			{
+				j = ft_atoi_limit(argv[i]);
+				ft_add_back(&a, ft_stack_new(j));
+				i++;
+			}
 		}
 	}
 	return (a);

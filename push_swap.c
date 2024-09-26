@@ -43,6 +43,23 @@ void aproximacao (t_stack **a)
 	}
 }
 
+void aproximacao1 (t_stack **b)
+{
+	int index_max;
+
+	index_max = ft_find_index(*b, ft_max(*b));
+	if (index_max < ft_stack_lstsize(*b) / 2)
+	{
+		while ((*b)->nbr != ft_max(*b))
+			ft_rb(b, 0);
+	}
+	else
+	{
+		while ((*b)->nbr != ft_max(*b))
+			ft_rrb(b, 0);
+	}
+}
+
 void sort_true (t_stack **a)
 {
 	if (ft_min(*a) == (*a)->nbr)
@@ -56,21 +73,19 @@ void sort_true (t_stack **a)
 		if (!ft_checksorted(*a))
 			ft_sa(a, 0);
 	}
-	else if (ft_max(*a) > (*a)->nbr)
+	else if (ft_max(*a) == (*a)->next->nbr)
 	{
 		ft_rra(a, 0);
 		if (!ft_checksorted(*a))
 			ft_sa(a, 0);
 	}
+	else
+		ft_sa(a, 0);
 	
 }
 
 void algor (t_stack **a, t_stack **b)
 {
-	/*printf("antes aproximacao A:\n");
-	print_stack(*a);
-	printf("antes aproximacao B:\n");
-	print_stack(*b);*/
 	while (ft_stack_lstsize(*a) > 3)
 	{
 		fill_index(a);
@@ -80,15 +95,24 @@ void algor (t_stack **a, t_stack **b)
 			ft_pb(a, b, 0);
 		}
 	}
-	/*printf("Apos aproximacao A:\n");
-	print_stack(*a);
-	printf("Apos aproximacao B:\n");
-	print_stack(*b);*/
 	if (!ft_checksorted(*a) && ft_stack_lstsize(*a) == 3)
 		sort_true(a);
 	while (*b)
 	{
-		ft_pa(a, b, 0);
+		if (ft_max(*b) == (*b)->nbr)
+		{
+			ft_pa(a, b, 0);
+		}
+		else if (ft_max(*b) == (*b)->next->nbr)
+		{
+			ft_sb(b, 0);
+			ft_pa(a, b, 0);
+		}
+		else
+		{
+			fill_index(b);
+			aproximacao1(b);
+		}
 	}
 }
 
@@ -108,27 +132,36 @@ void algor1_aux(t_stack **a, t_stack **b)
 {
 	int	index_min;
 	long	aux;
+	t_stack	*tmp;
 
 	aux = (*a)->key_nbr;
-	while ((long)ft_min(*a) <= aux)
+	tmp = *a;
+	while (tmp)
 	{
-		fill_index(a);
-		index_min = ft_find_index(*a, ft_min(*a));
-		if ((index_min < ft_stack_lstsize(*a) / 2))
+		if (tmp->nbr <= aux)
 		{
-			while ((*a)->nbr != ft_min(*a))
-				ft_ra(a, 0);
+			fill_index(a);
+			index_min = ft_find_index(*a, tmp->nbr);
+			if ((index_min < ft_stack_lstsize(*a) / 2))
+			{
+				while ((*a)->nbr != tmp->nbr)
+					ft_ra(a, 0);
+			}
+			else
+			{
+				while ((*a)->nbr != tmp->nbr)
+					ft_rra(a, 0);
+			}
+			ft_pb(a, b, 0);
+			while (*a && (*a)->nbr <= aux)
+				ft_pb(a, b, 0);
+			tmp = *a;
 		}
-		else
-		{
-			while ((*a)->nbr != ft_min(*a))
-				ft_rra(a, 0);
-		}
-		ft_pb(a, b, 0);
+		tmp = tmp->next;
 	}
 }
 
-void	algor1(t_stack **a, t_stack **b)
+void	algor1(t_stack **a, t_stack **b, long dec)
 {
 	long	*vet;
 	long		div;
@@ -136,19 +169,13 @@ void	algor1(t_stack **a, t_stack **b)
 
 	div = 1;
 	vet = fill_vet_pilha(*a, &tm);
-	while (div < 4 && !ft_checksorted(*a) && ft_stack_lstsize(*a) > 10)
+	while (div < dec && !ft_checksorted(*a) && ft_stack_lstsize(*a) > 10)
 	{
-		(*a)->key_nbr = vet[((div * tm) / 4) - 1];
-		//printf("div: %ld e tm : %ld key: %ld\n", div, tm, (*a)->key_nbr);
+		(*a)->key_nbr = vet[((div * tm) / dec) - 1];
 		while ((*a)->key_nbr > ft_min(*a))
 		{
 			algor1_aux(a, b);
-			
 		}
-		/*printf("Apos algor A: v\n");
-		print_stack(*a);
-		printf("Apos algor B: v\n");
-		print_stack(*b);*/
 		div++;
 	}
 	if (!ft_checksorted(*a))
@@ -156,6 +183,7 @@ void	algor1(t_stack **a, t_stack **b)
 		fill_index(a);
 		algor(a, b);
 	}
+	free(vet);
 } 
 
 int	main(int argc, char **argv)
@@ -163,6 +191,8 @@ int	main(int argc, char **argv)
 	t_stack	*a;
 	t_stack	*b;
 
+	if (argc == 1)
+		return (0);
 	b = NULL;
 	a = ft_process(argc, argv);
 	if (!a || ft_checkdup(a))
@@ -177,13 +207,11 @@ int	main(int argc, char **argv)
 		{
 			algor(&a, &b);
 		}
-		else if ((ft_stack_lstsize(a) > 10) && (ft_stack_lstsize(a) <= 100))
-			algor1(&a, &b);
+		else if ((ft_stack_lstsize(a) > 10) && (ft_stack_lstsize(a) <= 200))
+			algor1(&a, &b, 4);
+		else if ((ft_stack_lstsize(a) > 200))
+			algor1(&a, &b, 14);
 	}
-	/*printf("Apos fim:\n");
-	print_stack(a);
-	printf("Apos fim:\n");
-	print_stack(b);*/
 	ft_free(&a);
 	return (0);
 }
