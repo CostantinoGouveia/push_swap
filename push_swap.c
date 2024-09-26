@@ -56,13 +56,13 @@ void sort_true (t_stack **a)
 		if (!ft_checksorted(*a))
 			ft_sa(a, 0);
 	}
-	else
+	else if (ft_max(*a) > (*a)->nbr)
 	{
-		if (ft_find_index(*a, ft_max(*a)) == 1)
-			ft_rra(a, 0);
-		else
+		ft_rra(a, 0);
+		if (!ft_checksorted(*a))
 			ft_sa(a, 0);
 	}
+	
 }
 
 void algor (t_stack **a, t_stack **b)
@@ -73,12 +73,12 @@ void algor (t_stack **a, t_stack **b)
 	print_stack(*b);*/
 	while (ft_stack_lstsize(*a) > 3)
 	{
+		fill_index(a);
 		if (!ft_checksorted(*a))
 		{
 			aproximacao(a);
 			ft_pb(a, b, 0);
 		}
-		fill_index(a);
 	}
 	/*printf("Apos aproximacao A:\n");
 	print_stack(*a);
@@ -107,13 +107,13 @@ void print_stack(t_stack *stack) {
 void algor1_aux(t_stack **a, t_stack **b)
 {
 	int	index_min;
+	long	aux;
 
-	(void) b;
-	fill_index(a);
-	index_min = ft_find_index(*a, ft_min(*a));
-
-	if((ft_min(*a) <= (*a)->key_nbr))
+	aux = (*a)->key_nbr;
+	while ((long)ft_min(*a) <= aux)
 	{
+		fill_index(a);
+		index_min = ft_find_index(*a, ft_min(*a));
 		if ((index_min < ft_stack_lstsize(*a) / 2))
 		{
 			while ((*a)->nbr != ft_min(*a))
@@ -124,6 +124,7 @@ void algor1_aux(t_stack **a, t_stack **b)
 			while ((*a)->nbr != ft_min(*a))
 				ft_rra(a, 0);
 		}
+		ft_pb(a, b, 0);
 	}
 }
 
@@ -135,14 +136,14 @@ void	algor1(t_stack **a, t_stack **b)
 
 	div = 1;
 	vet = fill_vet_pilha(*a, &tm);
-	while (!ft_checksorted(*a) && ft_stack_lstsize(*a) > 10)
+	while (div < 4 && !ft_checksorted(*a) && ft_stack_lstsize(*a) > 10)
 	{
 		(*a)->key_nbr = vet[((div * tm) / 4) - 1];
 		//printf("div: %ld e tm : %ld key: %ld\n", div, tm, (*a)->key_nbr);
-		while ((*a)->key_nbr > ft_min(*a) && ft_stack_lstsize(*a) > 10)
+		while ((*a)->key_nbr > ft_min(*a))
 		{
 			algor1_aux(a, b);
-			ft_pb(a, b, 0);
+			
 		}
 		/*printf("Apos algor A: v\n");
 		print_stack(*a);
@@ -150,11 +151,11 @@ void	algor1(t_stack **a, t_stack **b)
 		print_stack(*b);*/
 		div++;
 	}
-	if (ft_stack_lstsize(*a) <= 10 && !ft_checksorted(*a))
+	if (!ft_checksorted(*a))
 	{
 		fill_index(a);
 		algor(a, b);
-	}	
+	}
 } 
 
 int	main(int argc, char **argv)
@@ -179,9 +180,9 @@ int	main(int argc, char **argv)
 		else if ((ft_stack_lstsize(a) > 10) && (ft_stack_lstsize(a) <= 100))
 			algor1(&a, &b);
 	}
-	/*printf("Apos algor A:\n");
+	/*printf("Apos fim:\n");
 	print_stack(a);
-	printf("Apos algor B:\n");
+	printf("Apos fim:\n");
 	print_stack(b);*/
 	ft_free(&a);
 	return (0);
