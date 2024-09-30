@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cgouveia <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/30 13:04:43 by cgouveia          #+#    #+#             */
+/*   Updated: 2024/09/30 13:06:11 by cgouveia         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_stack	*ft_stack_lstlast(t_stack *lst)
@@ -24,7 +36,7 @@ int	ft_stack_lstsize(t_stack *lst)
 
 int	ft_min(t_stack *a)
 {
-	int		i;
+	int	i;
 
 	i = a->nbr;
 	while (a)
@@ -38,13 +50,25 @@ int	ft_min(t_stack *a)
 
 int	ft_max(t_stack *a)
 {
-	int		i;
+	int	i;
 
 	i = a->nbr;
 	while (a)
 	{
 		if (a->nbr > i)
 			i = a->nbr;
+		a = a->next;
+	}
+	return (i);
+}
+
+int	ft_find_index(t_stack *a, int nbr)
+{
+	int	i;
+
+	while (a->nbr != nbr)
+	{
+		i = a->index;
 		a = a->next;
 	}
 	return (i);
