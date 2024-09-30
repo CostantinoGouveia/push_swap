@@ -32,15 +32,11 @@ void aproximacao (t_stack **a)
 
 	index_min = ft_find_index(*a, ft_min(*a));
 	if (index_min < ft_stack_lstsize(*a) / 2)
-	{
 		while ((*a)->nbr != ft_min(*a))
 			ft_ra(a, 0);
-	}
 	else
-	{
 		while ((*a)->nbr != ft_min(*a))
 			ft_rra(a, 0);
-	}
 }
 
 void aproximacao1 (t_stack **b)
@@ -49,15 +45,11 @@ void aproximacao1 (t_stack **b)
 
 	index_max = ft_find_index(*b, ft_max(*b));
 	if (index_max < ft_stack_lstsize(*b) / 2)
-	{
 		while ((*b)->nbr != ft_max(*b))
 			ft_rb(b, 0);
-	}
 	else
-	{
 		while ((*b)->nbr != ft_max(*b))
 			ft_rrb(b, 0);
-	}
 }
 
 void sort_true (t_stack **a)
@@ -86,23 +78,18 @@ void sort_true (t_stack **a)
 
 void algor (t_stack **a, t_stack **b)
 {
-	while (ft_stack_lstsize(*a) > 3)
+	while (ft_stack_lstsize(*a) > 3 && !ft_checksorted(*a))
 	{
 		fill_index(a);
-		if (!ft_checksorted(*a))
-		{
-			aproximacao(a);
-			ft_pb(a, b, 0);
-		}
+		aproximacao(a);
+		ft_pb(a, b, 0);
 	}
 	if (!ft_checksorted(*a) && ft_stack_lstsize(*a) == 3)
 		sort_true(a);
 	while (*b)
 	{
 		if (ft_max(*b) == (*b)->nbr)
-		{
 			ft_pa(a, b, 0);
-		}
 		else if (ft_max(*b) == (*b)->next->nbr)
 		{
 			ft_sb(b, 0);
@@ -116,12 +103,15 @@ void algor (t_stack **a, t_stack **b)
 	}
 }
 
-void print_stack(t_stack *stack) {
-    if (!stack) {
+void print_stack(t_stack *stack)
+{
+    if (!stack)
+	{
         printf("Stack is empty\n");
         return;
     }
-    while (stack) {
+    while (stack)
+	{
         printf("%ld ", stack->nbr);
         stack = stack->next;
     }
@@ -143,16 +133,11 @@ void algor1_aux(t_stack **a, t_stack **b)
 			fill_index(a);
 			index_min = ft_find_index(*a, tmp->nbr);
 			if ((index_min < ft_stack_lstsize(*a) / 2))
-			{
 				while ((*a)->nbr != tmp->nbr)
 					ft_ra(a, 0);
-			}
 			else
-			{
 				while ((*a)->nbr != tmp->nbr)
 					ft_rra(a, 0);
-			}
-			ft_pb(a, b, 0);
 			while (*a && (*a)->nbr <= aux)
 				ft_pb(a, b, 0);
 			tmp = *a;
@@ -172,17 +157,11 @@ void	algor1(t_stack **a, t_stack **b, long dec)
 	while (div < dec && !ft_checksorted(*a) && ft_stack_lstsize(*a) > 10)
 	{
 		(*a)->key_nbr = vet[((div * tm) / dec) - 1];
-		while ((*a)->key_nbr > ft_min(*a))
-		{
-			algor1_aux(a, b);
-		}
+		algor1_aux(a, b);
 		div++;
 	}
 	if (!ft_checksorted(*a))
-	{
-		fill_index(a);
 		algor(a, b);
-	}
 	free(vet);
 } 
 
@@ -204,9 +183,7 @@ int	main(int argc, char **argv)
 	{
 		fill_index(&a);
 		if (ft_stack_lstsize(a)  <= 10)
-		{
 			algor(&a, &b);
-		}
 		else if ((ft_stack_lstsize(a) > 10) && (ft_stack_lstsize(a) <= 200))
 			algor1(&a, &b, 4);
 		else if ((ft_stack_lstsize(a) > 200))

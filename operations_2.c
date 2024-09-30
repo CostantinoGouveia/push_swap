@@ -7,7 +7,8 @@ void	ft_rr(t_stack **a, t_stack **b, int j)
 
 	if (!*a || !((*a)->next) || !*b || !((*b)->next))
 		return ;
-
+	
+	//printf("dentro do rr\n");
 	// Rotacionar pilha a
 	tmp = *a;
 	*a = (*a)->next;
